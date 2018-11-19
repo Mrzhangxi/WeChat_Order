@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zx.sell.dao.OrderMasterDao">
+
+    <select id="getOrderMasterByID" resultType="com.zx.sell.dataobject.OrderMaster">
+        SELECT * FROM order_master WHERE order_id = #{orderId};
+    </select>
+
+    <select id="getOrdersByBuyerOpenId" resultType="com.zx.sell.dataobject.OrderMaster">
+        SELECT * FROM order_master WHERE buyer_openid = #{buyerOpenId} LIMIT #{startIndex}, #{endIndex};
+    </select>
+
+    <select id="getOrders" resultType="com.zx.sell.dataobject.OrderMaster">
+         SELECT * FROM order_master LIMIT #{startIndex}, #{endIndex};
+    </select>
+
+    <update id="updateOrderMaster" parameterType="com.zx.sell.dataobject.OrderMaster">
+        UPDATE order_master
+        <set>
+            <if test="buyerName != null">buyer_name = #{buyerName},</if>
+            <if test="buyerPhone != null">buyer_phone = #{buyerPhone},</if>
+            <if test="buyerAddress != null">buyer_address = #{buyerAddress},</if>
+            <if test="orderAmount != null">order_amount = #{orderAmount},</if>
+            <if test="orderStatus != null">order_status = #{orderStatus},</if>
+            <if test="payStatus != null">pay_status = #{payStatus},</if>
+            <if test="updateTime != null">update_time = #{updateTime}</if>
+        </set>
+        WHERE order_id = #{orderId};
+    </update>
+
+    <insert id="addOrderMaster" parameterType="com.zx.sell.dataobject.OrderMaster">
+        INSERT INTO
+        order_master (order_id, buyer_name, buyer_phone, buyer_address, buyer_openid, order_amount, order_status, pay_status, create_time, update_time)
+        VALUES (#{orderId}, #{buyerName}, #{buyerPhone}, #{buyerAddress}, #{buyerOpenid}, #{orderAmount}, #{orderStatus}, #{payStatus}, #{createTime}, #{updateTime});
+    </insert>
+</mapper>

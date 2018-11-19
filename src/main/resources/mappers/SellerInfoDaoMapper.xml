@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zx.sell.dao.SellerInfoDao">
+
+    <select id="getSellerByopenId" resultType="com.zx.sell.dataobject.SellerInfo">
+        SELECT * FROM seller_info WHERE openid = #{openId};
+    </select>
+    
+    <select id="getSellerByID" resultType="com.zx.sell.dataobject.SellerInfo">
+        SELECT * FROM seller_info WHERE sellerId = #{ID};
+    </select>
+
+    <insert id="addSeller" parameterType="com.zx.sell.dataobject.SellerInfo">
+        INSERT INTO
+        seller_info (sellerId, username, password, openid, create_time, update_time)
+        VALUES (#{sellerId}, #{username}, #{password}, #{openid}, #{createTime}, #{updateTime});
+    </insert>
+
+    <update id="updateSeller" parameterType="com.zx.sell.dataobject.SellerInfo">
+        UPDATE seller_info
+        <set>
+            <if test="#{username} != null">username = #{username},</if>
+            <if test="#{password} != null">password = #{password},</if>
+            <if test="#{openid} != null">openid = #{openid},</if>
+            <if test="#{createTime} != null">create_time = #{createTime},</if>
+            <if test="#{updateTime} != null">update_time = #{updateTime}</if>
+        </set>
+        WHERE sellerId = #{sellerId};
+    </update>
+</mapper>

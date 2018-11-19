@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zx.sell.dao.ProductInfoDao">
+
+    <select id="getAllProducts" resultType="com.zx.sell.dataobject.ProductInfo">
+        SELECT * FROM product_info;
+    </select>
+
+    <select id="getProductByID" resultType="com.zx.sell.dataobject.ProductInfo">
+        SELECT * FROM product_info WHERE product_id = #{productID};
+    </select>
+
+    <select id="getProductsByStatus" resultType="com.zx.sell.dataobject.ProductInfo">
+        SELECT * FROM  product_info WHERE product_status = #{productStatus};
+    </select>
+    
+    <select id="getLimitProduct" resultType="com.zx.sell.dataobject.ProductInfo">
+        SELECT * FROM product_info LIMIT #{startIndex}, #{endIndex};
+    </select>
+    
+    <insert id="addProduct" parameterType="com.zx.sell.dataobject.ProductInfo">
+        INSERT INTO
+        product_info (product_id, product_name, product_price, product_stock, product_description, product_icon, product_status, category_type, create_time, update_time)
+        VALUES
+        (#{productId}, #{productName}, #{productPrice}, #{productStock}, #{productDescription}, #{productIcon}, #{productStatus}, #{categoryType}, #{createTime}, #{updateTime});
+    </insert>
+    
+    <update id="updateProduct" parameterType="com.zx.sell.dataobject.ProductInfo">
+        UPDATE product_info
+        <set>
+            <if test="productName != null">product_name = #{productName},</if>
+            <if test="productPrice != null">product_price = #{productPrice},</if>
+            <if test="productStock != null">product_stock = #{productStock},</if>
+            <if test="productDescription != null">product_description = #{productDescription},</if>
+            <if test="productIcon != null">product_icon = #{productIcon},</if>
+            <if test="productStatus != null">product_status = #{productStatus},</if>
+            <if test="categoryType != null">category_type = #{categoryType},</if>
+            <if test="updateTime != null">update_time = #{updateTime}</if>
+        </set>
+        WHERE product_id = #{productId};
+    </update>
+
+    <delete id="deleteProduct">
+        DELETE FROM product_info WHERE product_id = #{productID};
+    </delete>
+</mapper>

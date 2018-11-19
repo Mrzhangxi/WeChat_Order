@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zx.sell.dao.ProductCategoryDao">
+    <!--<select id="getallProductCategory" resultType="com.zx.sell.dataobject.ProductCategory">-->
+         <!--SELECT * FROM product_category;-->
+    <!--</select>-->
+    
+    <select id="getAllProductCategorys" resultType="com.zx.sell.dataobject.ProductCategory">
+        SELECT * FROM product_category;
+    </select>
+
+    <select id="getProductCategoryByID" resultType="com.zx.sell.dataobject.ProductCategory">
+        SELECT * FROM product_category WHERE category_id = #{productCategoryID};
+    </select>
+    
+    <insert id="addProductCategory" useGeneratedKeys="true" keyColumn="category_id" keyProperty="categoryId">
+        INSERT INTO
+        product_category (category_id, category_name, category_type, create_time, update_time)
+        VALUES
+        (#{categoryId}, #{categoryName}, #{categoryType}, #{createTime}, #{updateTime});
+    </insert>
+
+    <update id="updateProductCategory" parameterType="com.zx.sell.dataobject.ProductCategory">
+        UPDATE product_category
+        <set>
+            <if test="categoryName != null">category_name = #{categoryName},</if>
+            <if test="categoryType != null">category_type = #{categoryType},</if>
+            <if test="updateTime != null">update_time = #{updateTime}</if>
+        </set>
+        WHERE category_id = #{categoryId};
+    </update>
+
+    <delete id="deleteProductCategory">
+        DELETE FROM
+        product_category
+        WHERE
+        category_id = #{categoryID};
+    </delete>
+
+    <select id="getProductCategorysByType" resultType="com.zx.sell.dataobject.ProductCategory">
+        SELECT * FROM product_category WHERE category_type = #{typeID};
+    </select>
+</mapper>

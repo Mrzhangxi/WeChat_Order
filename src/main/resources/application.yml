@@ -1,0 +1,42 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 123654147a
+    url: jdbc:mysql://localhost/sell?useSSL=false&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+#  thymeleaf:
+#    cache: false
+#    prefix: classpath:/templates/
+#    check-template: true
+#    suffix: .html
+#    encoding: UTF-8
+#    mode: HTML
+#    servlet:
+#      content-type: text/html
+  jackson:
+    default-property-inclusion: non_null
+  freemarker:
+    request-context-attribute: req
+    suffix: .ftl
+    content-type: text/html
+    enabled: true
+    cache: false
+    template-loader-path: classpath:/templates/
+    charset: UTF-8
+  redis:
+    host: 127.0.0.1
+    port: 6379
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  type-aliases-package: com.zx.sell
+  mapper-locations: classpath:mappers/*Mapper.xml
+server:
+  servlet:
+    context-path: /sell
+
+#配置常量
+wechat:
+  mpAppId: wx984319a4e904ac05
+  mpAppSecret: cccff41427d9c03787905d5cdc5b2124

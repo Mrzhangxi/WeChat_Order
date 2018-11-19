@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zx.sell.dao.OrderDetailDao">
+
+    <select id="getOrderDetailsByOrderID" resultType="com.zx.sell.dataobject.OrderDetail">
+        SELECT * FROM order_detail WHERE order_id = #{orderId};
+    </select>
+
+    <select id="getOrderDetailByID" resultType="com.zx.sell.dataobject.OrderDetail">
+        SELECT * FROM order_detail WHERE detail_id = #{detailId};
+    </select>
+
+    <insert id="addOrderDetail" parameterType="com.zx.sell.dataobject.OrderDetail">
+        INSERT INTO
+        order_detail (detail_id, order_id, product_id, product_name, product_price, product_quantity, product_icon, create_time, update_time)
+        VALUES (#{detailId}, #{orderId}, #{productId}, #{productName}, #{productPrice}, #{productQuantity}, #{productIcon}, #{createTime}, #{updateTime});
+    </insert>
+
+    <insert id="addOrderDetails" parameterType="java.util.List">
+        INSERT INTO
+        order_detail (detail_id, order_id, product_id, product_name, product_price, product_quantity, product_icon, create_time, update_time)
+        VALUES
+        <foreach collection="list" item="orderdetail" index="index" separator=",">
+            (
+            #{orderdetail.detailId},
+            #{orderdetail.orderId},
+            #{orderdetail.productId},
+            #{orderdetail.productName},
+            #{orderdetail.productPrice},
+            #{orderdetail.productQuantity},
+            #{orderdetail.productIcon},
+            #{orderdetail.createTime},
+            #{orderdetail.updateTime}
+            )
+        </foreach>
+        ;
+    </insert>
+    <update id="updateOrderDetail" parameterType="com.zx.sell.dataobject.OrderDetail">
+        UPDATE order_detail
+        <set>
+            <if test="productId != null">product_id = #{productId},</if>
+            <if test="productName != null">product_name = #{productName},</if>
+            <if test="productPrice != null">product_price = #{productPrice},</if>
+            <if test="productQuantity != null">product_quantity = #{productQuantity},</if>
+            <if test="productIcon != null">product_icon = #{productIcon},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime}</if>
+        </set>
+        WHERE detail_id = #{detailId};
+    </update>
+</mapper>
